@@ -1,28 +1,28 @@
-name: CI Pipeline
+name: CI Pipeline #工作流程名稱
 
 on:
   push:
-    branches: [main]
+    branches: [main] #當有推送到main分支時觸發
   pull_request:
-    branches: [main]
+    branches: [main] #當有拉取請求到main分支時觸發
 
 env:
-  NODE_VERSION: '20'
+  NODE_VERSION: '20' #設定Node.js版本為20
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
+      - name: Checkout #把專案程式碼下載（Clone）到這台虛擬機裡
+        uses: actions/checkout@v4 
+ 
+      - name: Setup Node.js #在虛擬機中安裝 Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install dependencies #安裝專案的相依套件
+        run: npm install
 
-      - name: Run tests
+      - name: Run tests #執行測試
         run: npm test
