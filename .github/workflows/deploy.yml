@@ -1,0 +1,49 @@
+name: Manual Deployment Pipeline
+
+# 觸發條件區塊
+on:
+  # 加入你的手動觸發設定
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: '部署環境'
+        required: true
+        default: 'staging'
+        type: choice
+        options: [staging, production]
+      debug:
+        description: '啟用除錯模式'
+        type: boolean
+        default: false
+
+# 工作任務區塊
+jobs:
+  deploy-job:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 下載程式碼
+        uses: actions/checkout@v4
+
+      # 讀取使用者選擇的 environment 參數
+      - name: 顯示部署環境
+        run: |
+          echo "準備開始部署流程..."
+          echo "目標環境為：${{ inputs.environment }}"
+
+      # 根據 environment 參數執行不同的腳本
+      - name: 執行 Staging 部署
+        if: ${{ inputs.environment == 'staging' }}
+        run: echo "執行 staging 環境專屬的部署指令..."
+
+      - name: 執行 Production 部署
+        if: ${{ inputs.environment == 'production' }}
+        run: echo "執行 production 環境專屬的部署指令..."
+
+      # 讀取使用者勾選的 debug 參數
+      - name: 檢查是否啟用除錯模式
+        if: ${{ inputs.debug == true }}
+        run: |
+          echo "⚠ 除錯模式已開啟！"
+          echo "印出詳細的系統環境變數："
+          printenv
