@@ -6,9 +6,15 @@ updates:
       interval: "daily"       # 核心修改：從 weekly 改為 daily (每天)
       time: "15:00"           # 核心修改：設定為下午 15 點
       timezone: "Asia/Taipei" # 指定台北時間，這樣就不需要自己算時差
-    open-pull-requests-limit: 10
-    labels:
+    open-pull-requests-limit: 10 # 同時最多開啟 10 個 Dependabot PR
+    labels: #每個 PR 都會自動加上 GitHub label
       - "dependencies"
       - "automated"
     commit-message:
-      prefix: "chore(deps)"
+      prefix: "chore(deps)" # 自訂 commit 訊息的前綴
+    groups: # 將多個依賴的更新合併成一個 PR
+      development-dependencies:
+        patterns:
+          - "*"
+        dependency-type: "development"
+ 
