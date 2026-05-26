@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"       # 核心修改：從 weekly 改為 daily (每天)
+      time: "15:00"           # 核心修改：設定為下午 15 點
+      timezone: "Asia/Taipei" # 指定台北時間，這樣就不需要自己算時差
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
