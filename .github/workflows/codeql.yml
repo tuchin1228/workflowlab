@@ -9,17 +9,17 @@ jobs:
   analyze:
     runs-on: ubuntu-latest
     permissions:
-      security-events: write
+      security-events: write #允許寫入安全事件，以便CodeQL能夠報告分析結果
     strategy:
       matrix:
-        language: ['javascript']
+        language: ['javascript'] #分析JavaScript程式碼
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4 #把專案程式碼下載（Clone）到這台虛擬機裡
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v3 #初始化CodeQL分析環境
         with:
-          languages: ${{ matrix.language }}
+          languages: ${{ matrix.language }} #指定要分析的程式語言
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3
+        uses: github/codeql-action/autobuild@v3 #自動構建專案，讓CodeQL能夠分析程式碼 (JS專案通常不需要額外的構建步驟)
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v3 #執行CodeQL分析
